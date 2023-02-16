@@ -28,17 +28,17 @@ Route::get('/user/{id}', function ($id) {
 
 
 // product
-Route::post('/product', [ProductsController::class,'CreateProduct']);
+Route::post('/product', [ProductsController::class,'CreateProduct'])->middleware("auth");
 Route::get('/product/{id}', [ProductsController::class,'CreateProductView']);
-Route::put('/product/{id}/edit');
-Route::put('/product/{id}/delete');
+Route::put('/product/{id}/edit')->middleware("auth");
+Route::delete('/product/{id}/delete')->middleware("auth");
 // Auth
 Route::post('/register', [UsersController::class,'CreateUser']);
 Route::get('/register', [UsersController::class,'CreateUserView']);
 Route::post('/login', [UsersController::class,'Login']);
-Route::get('/login', [UsersController::class,'LoginView']);
-Route::get('/profile/{id}', [UsersController::class,'LoginView']);
-Route::put('/profile');
-Route::delete('/profile');
+Route::get('/login', [UsersController::class,'LoginView'])->name('login');
+Route::get('/profile/{id?}', [UsersController::class,'GetProfile']);
+Route::put('/profile/edit')->middleware("auth");
+Route::delete('/profile/delete')->middleware("auth");
 // maket 
 Route::get('/maket',[Maket::class,'MaketView']);
