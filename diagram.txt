@@ -1,0 +1,31 @@
+Table users {
+  id_user varchar(40) [PK]
+  username varchar(20)
+  password varchar(512)
+  profile varchar(100)
+  bio varchar(256)
+  date datetime
+}
+
+Table products {
+  id_product varchar(40) [PK]
+  name varchar(20)
+  description varchar(512)
+  author varchar(40)
+  number int
+  image varchar(100)
+  
+  date datetime
+}
+Table comments_product {
+  id_product varchar(40) [PK]
+  author varchar(40)
+  comment varchar(512)
+  review int
+  date datetime
+}
+Ref: "users"."id_user" < "products"."author"
+
+Ref: "products"."id_product" < "comments_product"."id_product"
+
+Ref: "users"."id_user" < "comments_product"."author"
