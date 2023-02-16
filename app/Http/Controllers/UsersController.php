@@ -7,6 +7,9 @@ use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
+use Illuminate\Support\Facades\Auth;
+use App\Models\User;
+
 class UsersController extends Controller
 {
     function CreateUser (Request $request){
@@ -35,7 +38,7 @@ class UsersController extends Controller
     }
     
     function GetUser (){
-
+        return view('auth.profile');
     }
     
     function UpdateUser (){
@@ -45,8 +48,29 @@ class UsersController extends Controller
     function DeleteUser (){
 
     }
-
+    function LoginView(){
+        return view("auth.login");
+    }
+    function Login(Request $request){
+        $username=$request->post("username");
+        $a=DB::select("select password,id_user from users where username=?",[$request->post("username")]);
+        if (empty($a)){
+            return;
+        }
+       
+        echo auth()->user();
+        if (Auth::attempt(['username' => $username, 'password' => $a[0]->password], true)){
+            echo 404;
+            return;
+        }
+        echo 402;
+        return;
+    }
     function CreateUserView(){
         return view("auth.register");
+    }
+    function GetProfile ($id= null){
+        
+        return ;
     }
 }
