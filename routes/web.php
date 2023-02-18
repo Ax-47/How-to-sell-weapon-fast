@@ -2,7 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
-use App\Http\Controllers\ProductsController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\Maket;
 /*
@@ -28,8 +28,9 @@ Route::get('/user/{id}', function ($id) {
 
 
 // product
-Route::post('/product', [ProductsController::class,'CreateProduct'])->middleware("auth");
-Route::get('/product/{id}', [ProductsController::class,'CreateProductView']);
+Route::post('/product', [ProductController::class,'CreateProduct'])->middleware("auth");
+Route::get('/product', [ProductController::class,'CreateProductView']);
+Route::get('/product/{id?}', [ProductController::class,'ProductView']);
 Route::put('/product/{id}/edit')->middleware("auth");
 Route::delete('/product/{id}/delete')->middleware("auth");
 // Auth

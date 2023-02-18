@@ -10,8 +10,9 @@
     <form  method="post">
         @csrf
         <input type="text" name="name">
-        <input type="text" name="author">
-        <input type="number" name="number">
+        <input type="text" name="description">
+        <input type="number" name="price">
+        <input type="number" name="stock">
         <input type="submit" value="create products">
 
     </form>

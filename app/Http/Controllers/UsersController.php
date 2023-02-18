@@ -1,10 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use Illuminate\Http\Response;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
@@ -16,8 +14,8 @@ class UsersController extends Controller
         $name=$request->post('name');
         $password=$request->post('password');
         $repassword=$request->post('repassword');
-        $item =DB::select("select username from users where username=?",[$name]);
-        if (!isset($item)){
+        $item =DB::select("select name from users where name=?",[$name]);
+        if (!empty($item)){
             echo 403;
             return;
         }
@@ -29,11 +27,12 @@ class UsersController extends Controller
             echo 400;
             return;
         }
-        DB::insert("insert into users (id_user,username,password) values (?,?,?)",[
-            Str::uuid()->toString(),
-            $name,
-            Hash::make($password)
-        ]);
+
+        if (Auth::login(User::create(["name"=>$name,"password"=>Hash::make($password)],true))){
+            echo 404;
+            return;
+        }
+        
         return Redirect::to(url('/maket'));
     }
     
@@ -52,25 +51,42 @@ class UsersController extends Controller
         return view("auth.login");
     }
     function Login(Request $request){
-        $username=$request->post("username");
-        $a=DB::select("select password,id_user from users where username=?",[$request->post("username")]);
+        $name=$request->post("name");
+        $a=User::where('name', $name)->first();
         if (empty($a)){
-            return;
-        }
-       
-        echo auth()->user();
-        if (Auth::attempt(['username' => $username, 'password' => $a[0]->password], true)){
             echo 404;
             return;
         }
-        echo 402;
-        return;
+        if (!Hash::check($request->post("password"),$a["password"])){
+            echo 402;
+            return;
+        }
+        Auth::login($a,true);
+   
+        return Redirect::to(url('/'));
+
     }
     function CreateUserView(){
         return view("auth.register");
     }
     function GetProfile ($id= null){
-        
+        if ($id !== null){
+            $data=User::where('id', $id)->first();
+            
+            if (empty($data)){
+                echo '404';
+                return;
+            }
+            print_r($data);
+            echo "u";
+            return;
+        }
+        if (auth::check()){
+            $a=User::where('name', auth::getUser()->name)->first();
+            return;
+        }else{
+            echo "404";
+        }
         return ;
     }
 }

@@ -9,7 +9,7 @@
 <body>
     <form  method="post">
         @csrf
-        <input type="text" name="username">
+        <input type="text" name="name">
         <input type="password" name="password" id="">
         <input type="submit" value="Login">
 
