@@ -77,16 +77,19 @@ class UsersController extends Controller
                 echo '404';
                 return;
             }
-            print_r($data);
             echo "u";
-            return;
+            if ($data->id ===auth::getUser()->id){
+                return view('auth.profile',compact('data'))->with("self",true);
+            }else{
+                return view('auth.profile',compact('data'))->with("self",false);
+            }
+            
         }
         if (auth::check()){
-            $a=User::where('name', auth::getUser()->name)->first();
-            return;
+            $a=User::where('id', auth::getUser()->id)->first();
+            return view('auth.profile',compact('a'))->with("self",true);
         }else{
-            echo "404";
+            return Redirect::to(route('login'));
         }
-        return ;
     }
 }

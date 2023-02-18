@@ -7,6 +7,14 @@
     <title>Document</title>
 </head>
 <body>
-    <h1>Hello</h1>
+    @if ($self)
+        <a href=""><img src={{$a->profile}} alt=""></a>
+        <h1>Hello <a href="">{{$a->name}}</a></h1>
+        <a href=""><h2>{{$a->bio}}</h2></a>
+    @else
+        <img src={{$a->profile}} alt="">
+        <h1>Hello {{$a->name}}</h1>
+        <h2>{{$a->bio}}</h2>
+    @endif
 </body>
 </html>
