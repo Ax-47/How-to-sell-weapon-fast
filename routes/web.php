@@ -44,3 +44,5 @@ Route::delete('/profile/delete')->middleware("auth");
 // maket 
 Route::get('/maket',[MaketController::class,'MaketView']);
 Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");
+
+//commant
