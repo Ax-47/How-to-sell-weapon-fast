@@ -7,6 +7,7 @@ use App\models\Maket;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 class MaketController extends Controller
 {
     function MaketView(){
@@ -31,14 +32,20 @@ class MaketController extends Controller
             echo 404;
             return;
         }
-        if ($product->price > $user->money){
-            echo 400;
+        if ($product->stock < $stock){
+            echo 4001;
             return;
         }
         $paid=$product->price * $stock;
+        if ($paid > $user->money){
+            echo 400;
+            return;
+        }
+
+        $paid=$product->price * $stock;
         $user->money=$user->money-$paid;
         $user->save();
-        Maket::create(['product'=>$id,"author"=>$uid,'paid'=>$paid,'stock'=>$stock]);
+        Maket::create(["id"=>Str::uuid(),'product'=>$id,"author"=>$uid,'paid'=>$paid,'stock'=>$stock]);
 
         return view("maket.index");
     }
