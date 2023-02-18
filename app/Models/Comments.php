@@ -5,17 +5,15 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class Maket extends Model
+class Comments extends Model
 {
-    protected $table = 'maket';
-    const CREATED_AT = 'bought_at';
+    use HasFactory;
     protected $fillable = [
         'id',
         'product',
         'author',
-        'stock',
-        'paid',
+        'review',
+        'content',
     ];
     protected $primaryKey = 'id';
-    use HasFactory;
 }
