@@ -4,8 +4,6 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use Illuminate\Http\Response;
-use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
@@ -20,11 +18,10 @@ class ProductController extends Controller
         $stock=$request->post('stock');
         $price=$request->post('price');
         $description=$request->post('description');
-        $item =Product::where("name",$name_product)->where('author', Auth::getUser()->id);
-        if (empty($item)){
+        $item =Product::where('author', Auth::getUser()->id)->where("name",$name_product)->first();
+        if (isset($item)){
             echo "400";
             return;
-            
         }
         if ($stock<0 || $price<0){
             echo "ทำควยไร";
@@ -59,13 +56,16 @@ class ProductController extends Controller
 
     }
     function CreateProductView(){
-        return view("product.Create");
+        return view("product.create");
     }
     function ProductView($id=null){
         if ($id ===null){
-        return view("product.Create");
+            return view("product.create");
         }else{
-            return view("product.Create");
+
+           
+            $item =Product::with('user')->get()[0];
+            return view("product.profile",compact('item'));
         }
     }
 }
