@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UsersController;
-use App\Http\Controllers\Maket;
+use App\Http\Controllers\MaketController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -42,4 +42,5 @@ Route::get('/profile/{id?}', [UsersController::class,'GetProfile']);
 Route::put('/profile/edit')->middleware("auth");
 Route::delete('/profile/delete')->middleware("auth");
 // maket 
-Route::get('/maket',[Maket::class,'MaketView']);
+Route::get('/maket',[MaketController::class,'MaketView']);
+Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");
