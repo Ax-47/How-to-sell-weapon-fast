@@ -5,6 +5,7 @@ use App\Http\Controllers;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MaketController;
+use App\Http\Controllers\commentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -19,13 +20,6 @@ use App\Http\Controllers\MaketController;
 Route::get('/', function () {
     return view('welcome');
 });
-Route::get('/product/{id}', function ($id) {
-    return view('welcome');
-});
-Route::get('/user/{id}', function ($id) {
-    return view('welcome');
-});
-
 
 // product
 Route::post('/product', [ProductController::class,'CreateProduct'])->middleware("auth");
@@ -35,7 +29,7 @@ Route::put('/product/{id}/edit')->middleware("auth");
 Route::delete('/product/{id}/delete')->middleware("auth");
 // Auth
 Route::post('/register', [UsersController::class,'CreateUser']);
-Route::get('/register', [UsersController::class,'CreateUserView']);
+Route::get('/register', [UsersController::class,'CreateUserView'])->name('register');
 Route::post('/login', [UsersController::class,'Login']);
 Route::get('/login', [UsersController::class,'LoginView'])->name('login');
 Route::get('/profile/{id?}', [UsersController::class,'GetProfile']);
