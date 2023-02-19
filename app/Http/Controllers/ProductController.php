@@ -8,12 +8,15 @@ use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\User;
+use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
     function CreateProduct (Request $request){
         if (!Auth::check()){
             return Redirect::to(route("login"));
         }
+        
+        $file=$request->file('image');
         $name_product=$request->post('name');
         $stock=$request->post('stock');
         $price=$request->post('price');
@@ -35,13 +38,22 @@ class ProductController extends Controller
             echo "ทำควยไร";
             return;
         }
+        $filename = time().$file->getClientOriginalName();
+        $name = $file->hashName();
+        Storage::disk('local')->putFileAs(
+            'products/images/',
+            $file,
+            $filename
+          );
         $product_created=Product::create([
             "name"=>$name_product,
             "author"=>Auth::getUser()->id,
             "stock"=>$stock,
             "price"=>$price,
+            'image'=>$filename,
             "description"=>$description,
         ]);
+        echo $name_product;
         return Redirect::to(url('/product/'.$product_created->id));
         // echo "$request->post('name')";
     }

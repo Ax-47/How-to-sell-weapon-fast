@@ -7,8 +7,10 @@
     <title>Create Product</title>
 </head>
 <body>
-    <form  method="post">
+    <h1>create</h1>
+    <form action={{url("/productc")}} method="post" enctype="multipart/form-data">
         @csrf
+        <input type="file" name="image">
         <input type="text" name="name">
         <input type="text" name="description">
         <input type="number" name="price">

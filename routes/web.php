@@ -5,7 +5,7 @@ use App\Http\Controllers;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\UsersController;
 use App\Http\Controllers\MaketController;
-use App\Http\Controllers\commentController;
+use App\Http\Controllers\CommentController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -22,7 +22,7 @@ Route::get('/', function () {
 });
 
 // product
-Route::post('/product', [ProductController::class,'CreateProduct'])->middleware("auth");
+Route::post('/productc', [ProductController::class,'CreateProduct'])->middleware("auth");
 Route::get('/product', [ProductController::class,'CreateProductView'])->middleware("auth");
 Route::get('/product/{id}', [ProductController::class,'ProductView']);
 Route::put('/product/{id}/edit')->middleware("auth");
@@ -36,7 +36,9 @@ Route::get('/profile/{id?}', [UsersController::class,'GetProfile']);
 Route::put('/profile/edit')->middleware("auth");
 Route::delete('/profile/delete')->middleware("auth");
 // maket 
-Route::get('/maket',[MaketController::class,'MaketView']);
+Route::get('/maket',[MaketController::class,'MaketView'])->name('maket');
 Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");
 
 //commant
+Route::get('/comment/fetch',[CommentController::class,'MaketView']);
+Route::post('/comment/post',[CommentController::class,'post'])->middleware("auth");

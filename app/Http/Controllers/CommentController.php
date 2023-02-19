@@ -7,4 +7,8 @@ use Illuminate\Http\Request;
 class CommentController extends Controller
 {
     //
+
+    function post(){
+        
+    }
 }

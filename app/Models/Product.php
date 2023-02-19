@@ -5,6 +5,7 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasOne;
+
 class Product extends Model
 {
     use HasFactory;
@@ -18,9 +19,6 @@ class Product extends Model
         'price',
     ];
     protected $primaryKey = 'id';
-    protected $casts = [
-        'date' => 'datetime',
-    ];
 
     public function user()
     {
