@@ -17,10 +17,15 @@ Table products {
   author bigint(20)
   stock int
   price int
-  image varchar(100)
   created_at timestamp
   update_at timestamp
 }
+Table product_images {
+  id bigint(50) [PK]
+  product bigint(50) [PK]
+  image varchar(100)
+}
+
 Table comments_product {
   id bigint(50) [PK]
   product bigint(50)
@@ -29,6 +34,11 @@ Table comments_product {
   review int
   created_at timestamp
   update_at timestamp
+}
+Table comment_images {
+  id bigint(50) [PK]
+  product bigint(50) [PK]
+  image varchar(100)
 }
 Table maket {
   id bigint(50) [PK]
@@ -49,4 +59,8 @@ Ref: "users"."id" < "products"."author"
 
 Ref: "users"."id" < "maket"."author"
 
-Ref: "products"."id" < "maket"."product"
+Ref: "product_images"."product" < "products"."id"
+
+Ref: "comment_images"."product" < "comments_product"."product"
+
+Ref: "maket"."product" < "products"."id"
