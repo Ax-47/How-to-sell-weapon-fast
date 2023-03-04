@@ -14,8 +14,9 @@ class UsersController extends Controller
         $name=$request->post('name');
         $password=$request->post('password');
         $repassword=$request->post('repassword');
-        $item =DB::select("select name from users where name=?",[$name]);
-        if (!empty($item)){
+        
+        $item =User::firstWhere('name',$name);
+        if (isset($item)){
             echo 403;
             return;
         }
@@ -28,10 +29,7 @@ class UsersController extends Controller
             return;
         }
 
-        if (Auth::login(User::create(["name"=>$name,"password"=>Hash::make($password)],true))){
-            echo 404;
-            return;
-        }
+        Auth::login(User::create(["name"=>$name,"password"=>Hash::make($password)],true));
         
         return Redirect::to(url('/maket'));
     }

@@ -7,7 +7,7 @@ use Illuminate\Http\Response;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
-use App\Models\User;
+use App\Models\product_images;
 use Illuminate\Support\Facades\Storage;
 class ProductController extends Controller
 {
@@ -15,47 +15,50 @@ class ProductController extends Controller
         if (!Auth::check()){
             return Redirect::to(route("login"));
         }
-        
-        $file=$request->file('image');
-        $name_product=$request->post('name');
-        $stock=$request->post('stock');
-        $price=$request->post('price');
-        $description=$request->post('description');
-        $item =Product::where('author', Auth::getUser()->id)->where("name",$name_product)->first();
+        $validate = $this->getValidationFactory()->make($request->all(), [
+            'images' => 'required',
+            'name'=>'required|string|max:257',
+            'stock'=>'required|numeric|min:1',
+            'price'=>'required|numeric|min:1',
+            'description'=>'required|string|max:1025',
+            'images.*' => 'mimes:png,jpeg'
+            ],[
+                'name.required' => 'Name is must.',
+                'name.min' => 'Name must have 5 char.',
+            ]);
+        $item =Product::where('author', Auth::getUser()->id)->where("name",$request->post('name'))->first();
         if (isset($item)){
             echo "400";
             return;
         }
-        if ($stock<0 || $price<0){
-            echo "ทำควยไร";
-            return;
+        if ($validate->fails()) {
+            echo 'error';
+            return ;
         }
-        if (strlen($description)>1024 ){
-            echo "ทำควยไร";
-            return;
-        }
-        if (strlen($name_product)>256 ){
-            echo "ทำควยไร";
-            return;
-        }
-        $filename = time().$file->getClientOriginalName();
-        $name = $file->hashName();
-        Storage::disk('local')->putFileAs(
-            'products/images/',
-            $file,
-            $filename
-          );
         $product_created=Product::create([
-            "name"=>$name_product,
+            "name"=>$request->post('name'),
             "author"=>Auth::getUser()->id,
-            "stock"=>$stock,
-            "price"=>$price,
-            'image'=>$filename,
-            "description"=>$description,
+            "stock"=>$request->post('stock'),
+            "price"=>$request->post('price'),
+            "description"=>$request->post('description'),
         ]);
-        echo $name_product;
+        foreach ($request->file('images') as $imagefile) {     
+            $image = new product_images;
+            echo $imagefile;
+            $filename = time().$imagefile->getClientOriginalName();
+            $path = Storage::disk('local')->putFileAs(
+                'products/images/',
+                $imagefile,
+                $filename
+              );
+            $image->image = $path;
+            $image->product = $product_created->id;
+            $image->save();
+        }
+        
+        
         return Redirect::to(url('/product/'.$product_created->id));
-        // echo "$request->post('name')";
+        
     }
     
     function GetProduct (){
@@ -76,7 +79,7 @@ class ProductController extends Controller
         }else{
 
            
-            $item =Product::with('user')->get()[0];
+            $item =Product::findOrFail($id);
             return view("product.profile",compact('item'));
         }
     }

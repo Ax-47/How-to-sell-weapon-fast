@@ -11,11 +11,38 @@ return new class extends Migration
      */
     public function up(): void
     {
+        Schema::dropIfExists('users');
         Schema::create('products', function (Blueprint $table) {
-            $table->id();
-            $table->timestamps();
-        });
-    }
+                $table->bigIncrements('id');
+                $table->string('name',255)->nullable();
+                $table->string('description',1024)->nullable();
+                $table->bigInteger('author')->nullable();
+                $table->integer('stock');
+                $table->integer('price');
+                $table->timestamps();
+            });
+        Schema::create('users', function (Blueprint $table) {
+                $table->bigIncrements('id');
+                $table->string('name',255)->nullable();
+                $table->string('password',255)->nullable();
+                $table->string('profile',255)->nullable();
+                $table->string('bio',255)->nullable();
+                $table->integer('money')->default(0);
+                $table->string('remember_token',255)->nullable();
+                $table->timestamps();
+            });
+        Schema::create('product_images', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->bigInteger('product')->unsigned();
+                $table->string('image',100);
+            });
+    
+        }
+    
+        
+    
+    
+    
 
     /**
      * Reverse the migrations.
@@ -23,5 +50,8 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('products');
+        Schema::dropIfExists('users');
+        Schema::dropIfExists('product_images');
+
     }
 };

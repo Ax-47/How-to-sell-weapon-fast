@@ -23,7 +23,6 @@ class User extends Authenticatable
         'profile',
         'bio',
         'money',
-        'data',
     ];
     protected $primaryKey = 'id';
     /**
