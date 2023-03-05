@@ -45,12 +45,12 @@ class ProductController extends Controller
             echo $i++;     
             $image = new product_images;
             $filename = time().$imagefile->getClientOriginalName();
-            $path = Storage::disk('local')->putFileAs(
-                'upload/products/images',
+             Storage::disk('local')->putFileAs(
+                'public/images/products',
                 $imagefile,
                 $filename
               );
-            $image->image = $path;
+            $image->image = $filename;
             $image->product = $product_created->id;
             $image->save();
         }
