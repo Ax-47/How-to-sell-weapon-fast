@@ -28,10 +28,10 @@ Route::get('/product/{id}', [ProductController::class,'ProductView']);          
 Route::put('/product/{id}/edit')->middleware("auth");
 Route::delete('/product/{id}/delete')->middleware("auth");
 // Auth
-Route::post('/register', [UsersController::class,'CreateUser']);                       //
-Route::get('/register', [UsersController::class,'CreateUserView'])->name('register');  //
-Route::post('/login', [UsersController::class,'Login']);                               //
-Route::get('/login', [UsersController::class,'LoginView'])->name('login');             //
+Route::post('/register', [UsersController::class,'CreateUser']);                           //
+Route::get('/register', [UsersController::class,'CreateUserView'])->name('register');      //
+Route::post('/login', [UsersController::class,'Login']);                                   //
+Route::get('/login', [UsersController::class,'LoginView'])->name('login');                 //
 Route::get('/profile/{id?}', [UsersController::class,'GetProfile']);
 Route::put('/profile/edit')->middleware("auth");
 Route::delete('/profile/delete')->middleware("auth");

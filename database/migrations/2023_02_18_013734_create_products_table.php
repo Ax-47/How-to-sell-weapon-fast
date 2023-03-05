@@ -17,8 +17,8 @@ return new class extends Migration
                 $table->string('name',255)->nullable();
                 $table->string('description',1024)->nullable();
                 $table->bigInteger('author')->nullable();
-                $table->integer('stock');
-                $table->integer('price');
+                $table->integer('stock')->nullable();
+                $table->integer('price')->nullable();
                 $table->timestamps();
             });
         Schema::create('users', function (Blueprint $table) {
@@ -34,10 +34,31 @@ return new class extends Migration
             });
         Schema::create('product_images', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->bigInteger('product')->unsigned();
+                $table->bigInteger('product')->nullable();
                 $table->string('image',100);
             });
-    
+        Schema::create('comments', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->bigInteger('product')->nullable();
+                $table->bigInteger('author')->nullable();
+                $table->string('comment',512)->nullable();
+                $table->integer('review')->default(0);
+                $table->timestamps();
+            });
+        Schema::create('comment_images', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->bigInteger('comments')->unsigned();
+                $table->string('image',100);
+            });
+
+        Schema::create('maket', function (Blueprint $table) {
+                $table->bigIncrements('id')->unsigned();
+                $table->bigInteger('comments')->unsigned();
+                $table->bigInteger('product')->unsigned();
+                $table->integer('stock')->nullable();
+                $table->integer('price')->nullable();
+                $table->timestamps();
+            });
         }
     
         
@@ -53,6 +74,8 @@ return new class extends Migration
         Schema::dropIfExists('products');
         Schema::dropIfExists('users');
         Schema::dropIfExists('product_images');
-
+        Schema::dropIfExists('comments');
+        Schema::dropIfExists('comment_images');
+        Schema::dropIfExists('maket');
     }
 };
