@@ -16,12 +16,10 @@ class ProductController extends Controller
             return Redirect::to(route("login"));
         }
         $validate = $this->getValidationFactory()->make($request->all(), [
-            'images' => 'required',
             'name'=>'required|string|max:257',
             'stock'=>'required|numeric|min:1',
             'price'=>'required|numeric|min:1',
             'description'=>'required|string|max:1025',
-            'images.*' => 'mimes:png,jpeg'
             ],[
                 'name.required' => 'Name is must.',
                 'name.min' => 'Name must have 5 char.',
@@ -42,12 +40,13 @@ class ProductController extends Controller
             "price"=>$request->post('price'),
             "description"=>$request->post('description'),
         ]);
-        foreach ($request->file('images') as $imagefile) {     
+        $i=0;
+        foreach ($request->file('images') as $imagefile) {
+            echo $i++;     
             $image = new product_images;
-            echo $imagefile;
             $filename = time().$imagefile->getClientOriginalName();
             $path = Storage::disk('local')->putFileAs(
-                'products/images/',
+                'upload/products/images',
                 $imagefile,
                 $filename
               );
@@ -80,6 +79,7 @@ class ProductController extends Controller
 
            
             $item =Product::findOrFail($id);
+            
             return view("product.profile",compact('item'));
         }
     }

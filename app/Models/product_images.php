@@ -15,4 +15,10 @@ class product_images extends Model
     ];
     protected $primaryKey = 'id';
     public $timestamps = false;
+    public function image()
+    {
+
+        return $this->belongsTo(product_images::class, 'product');
+
+    }
 }

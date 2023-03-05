@@ -28,6 +28,7 @@ return new class extends Migration
                 $table->string('profile',255)->nullable();
                 $table->string('bio',255)->nullable();
                 $table->integer('money')->default(0);
+                $table->boolean('is_admin')->default(false);
                 $table->string('remember_token',255)->nullable();
                 $table->timestamps();
             });
