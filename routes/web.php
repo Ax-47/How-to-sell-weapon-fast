@@ -24,21 +24,25 @@ Route::get('/', function () {
 // product
 Route::post('/product', [ProductController::class,'CreateProduct'])->middleware("auth");   //
 Route::get('/product', [ProductController::class,'CreateProductView'])->middleware("auth");//
+//is admin
 Route::get('/product/{id}', [ProductController::class,'ProductView']);                     //
 Route::put('/product/{id}/edit')->middleware("auth");
 Route::delete('/product/{id}/delete')->middleware("auth");
+
 // Auth
 Route::post('/register', [UsersController::class,'CreateUser']);                           //
 Route::get('/register', [UsersController::class,'CreateUserView'])->name('register');      //
 Route::post('/login', [UsersController::class,'Login']);                                   //
 Route::get('/login', [UsersController::class,'LoginView'])->name('login');                 //
 Route::get('/profile/{id?}', [UsersController::class,'GetProfile']);
+//is me
 Route::put('/profile/edit')->middleware("auth");
 Route::delete('/profile/delete')->middleware("auth");
+
 // maket 
 Route::get('/maket',[MaketController::class,'MaketView'])->name('maket');
 Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");              //
 
 //commant
 Route::get('/comment/fetch',[CommentController::class,'MaketView']);
-Route::post('/comment/post',[CommentController::class,'post'])->middleware("auth");
+Route::post('/comment/post',[CommentController::class,'post'])->middleware("auth");        //todo upload image
