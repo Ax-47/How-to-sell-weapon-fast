@@ -24,7 +24,7 @@ Route::get('/', function () {
 // product
 Route::post('/product', [ProductController::class,'CreateProduct'])->middleware("auth");   //
 Route::get('/product', [ProductController::class,'CreateProductView'])->middleware("auth");//
-Route::get('/product/{id}', [ProductController::class,'ProductView']);
+Route::get('/product/{id}', [ProductController::class,'ProductView']);                     //
 Route::put('/product/{id}/edit')->middleware("auth");
 Route::delete('/product/{id}/delete')->middleware("auth");
 // Auth
