@@ -47,7 +47,7 @@ class MaketController extends Controller
         $product->stock=$product->stock-$stock;
         $user->save();
         $product->save();
-        Maket::create(["id"=>Str::uuid(),'product'=>$id,"author"=>$uid,'paid'=>$paid,'stock'=>$stock]);
+        Maket::create(['product'=>$id,"author"=>$uid,'price'=>$paid,'stock'=>$stock]);
 
         return view("maket.index");
     }

@@ -37,7 +37,7 @@ Route::put('/profile/edit')->middleware("auth");
 Route::delete('/profile/delete')->middleware("auth");
 // maket 
 Route::get('/maket',[MaketController::class,'MaketView'])->name('maket');
-Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");
+Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");              //
 
 //commant
 Route::get('/comment/fetch',[CommentController::class,'MaketView']);

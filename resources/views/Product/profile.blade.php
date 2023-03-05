@@ -7,7 +7,10 @@
     <title>Document</title>
 </head>
 <body>
-    <img src={{ 'storage\products\images\\'.$item->image }} alt="image" sizes="" srcset="">
+    @foreach ($item->images as $image)
+        <img src={{ asset('storage/images/products/'.$image->image) }} alt="{{$image->image}}" sizes="" srcset="">
+    @endforeach
+    
     <h1>Product :{{$item->name}}</h1>
     <h2>Description :{{$item->description}}</h2>
     <h2>Stock :{{$item->stock}}</h2>
@@ -20,11 +23,13 @@
         <input type="number" name="stock"><br>
         <input type="submit" value="buy"><br><br>
     </form>
+    
     @auth
         <form action={{url("/comment/post")}} method="post">
             @csrf
+            <input type="hidden" name="product" value="{{$id}}">
             <input type="number" name="review"><br>
-            <input type="text" name="connent"><br>
+            <input type="text" name="comment"><br>
             <input type="submit" value="lets go"><br>
         </form>
     @else

@@ -53,7 +53,7 @@ return new class extends Migration
 
         Schema::create('maket', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->bigInteger('comments')->unsigned();
+                $table->bigInteger('author')->unsigned();
                 $table->bigInteger('product')->unsigned();
                 $table->integer('stock')->nullable();
                 $table->integer('price')->nullable();

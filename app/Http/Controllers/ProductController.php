@@ -80,7 +80,11 @@ class ProductController extends Controller
            
             $item =Product::findOrFail($id);
             
-            return view("product.profile",compact('item'));
+            return view("product.profile")
+                    ->with(compact('item'))
+                    ->with(compact('id'))
+                    
+                    ;
         }
     }
 }

@@ -8,7 +8,6 @@ use Illuminate\Database\Eloquent\Model;
 class Maket extends Model
 {
     protected $table = 'maket';
-    const CREATED_AT = 'bought_at';
     protected $fillable = [
         'id',
         'product',

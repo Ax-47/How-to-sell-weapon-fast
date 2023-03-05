@@ -13,7 +13,7 @@ class Comments extends Model
         'product',
         'author',
         'review',
-        'content',
+        'comment',
     ];
     protected $primaryKey = 'id';
 }
