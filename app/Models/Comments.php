@@ -25,7 +25,7 @@ class Comments extends Model
     public function images()
     {
 
-        return $this->hasMany(Commentimages::class, 'product');
+        return $this->hasMany(CommentImage::class, 'comment');
 
     }
 }

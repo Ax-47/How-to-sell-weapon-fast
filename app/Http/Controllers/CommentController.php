@@ -40,7 +40,7 @@ class CommentController extends Controller
             $image = new CommentImage;
             $filename = time().$imagefile->getClientOriginalName();
              Storage::disk('local')->putFileAs(
-                'public/images/comment',
+                'public/images/comments',
                 $imagefile,
                 $filename
               );
