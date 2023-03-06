@@ -16,4 +16,16 @@ class Comments extends Model
         'comment',
     ];
     protected $primaryKey = 'id';
+    public function user()
+    {
+
+        return $this->belongsTo(User::class, 'author');
+
+    }
+    public function images()
+    {
+
+        return $this->hasMany(Commentimages::class, 'product');
+
+    }
 }

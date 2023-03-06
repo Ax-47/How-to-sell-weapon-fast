@@ -44,5 +44,4 @@ Route::get('/maket',[MaketController::class,'MaketView'])->name('maket');
 Route::post('/maket/buy',[MaketController::class,'Buy'])->middleware("auth");              //
 
 //commant
-Route::get('/comment/fetch',[CommentController::class,'MaketView']);
-Route::post('/comment/post',[CommentController::class,'post'])->middleware("auth");        //todo upload image
+Route::post('/comment/post',[CommentController::class,'post'])->middleware("auth");        //

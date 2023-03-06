@@ -47,7 +47,7 @@ return new class extends Migration
             });
         Schema::create('comment_images', function (Blueprint $table) {
                 $table->bigIncrements('id')->unsigned();
-                $table->bigInteger('product')->unsigned();
+                $table->bigInteger('comment')->unsigned();
                 $table->string('image',100);
             });
 

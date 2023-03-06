@@ -10,7 +10,7 @@ class CommentImage extends Model
     use HasFactory;
     protected $fillable = [
         'id',
-        'product',
+        'comment',
         'image',
     ];
     protected $primaryKey = 'id';
@@ -18,7 +18,7 @@ class CommentImage extends Model
     public function image()
     {
 
-        return $this->belongsTo(product_images::class, 'product');
+        return $this->belongsTo(product_images::class, 'comment');
 
     }
 }

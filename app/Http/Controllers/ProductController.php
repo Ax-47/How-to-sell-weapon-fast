@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Auth;
 use App\Models\Product;
 use App\Models\product_images;
 use Illuminate\Support\Facades\Storage;
+use App\Models\Comments;
 class ProductController extends Controller
 {
     function CreateProduct (Request $request){
@@ -79,11 +80,11 @@ class ProductController extends Controller
 
            
             $item =Product::findOrFail($id);
-            
+            $comment=Comments::where('product',$id)->get();
             return view("product.profile")
                     ->with(compact('item'))
                     ->with(compact('id'))
-                    
+                    ->with(compact('comment'))
                     ;
         }
     }

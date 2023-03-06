@@ -51,17 +51,8 @@ class CommentController extends Controller
         return Redirect::to(url('/product/'.$validate->validated()['product']));
 
     }
-    function fetch(Request $request){
-        $validate = $this->getValidationFactory()->make($request->all(), [
-            'product'=>'required|numeric|',
-            ],[
-                'product.numeric'=>'numeric only',
-                'product.required' => 'id is must.',
-                'product.max' => 'comment max have 1024 char.',
-            ]);
-        Comments::where('product',$validate->validated()['product'])->where('author', Auth::getUser()->id)->get();
-
-
-
+    function fetch(Request $request,int $id){
+        $comment=Comments::where('product',$id)->get();
+        return $comment;
     }
 }
