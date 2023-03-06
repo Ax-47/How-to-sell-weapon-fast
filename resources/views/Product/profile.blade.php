@@ -25,9 +25,10 @@
     </form>
     
     @auth
-        <form action={{url("/comment/post")}} method="post">
+        <form action={{url("/comment/post")}} method="post" enctype="multipart/form-data">
             @csrf
             <input type="hidden" name="product" value="{{$id}}">
+            <input type="file" name="images[]"  accept=".jpg, .jpeg, .png" multiple><br>
             <input type="number" name="review"><br>
             <input type="text" name="comment"><br>
             <input type="submit" value="lets go"><br>

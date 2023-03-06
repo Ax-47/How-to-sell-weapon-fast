@@ -16,6 +16,8 @@ class ProductController extends Controller
             return Redirect::to(route("login"));
         }
         $validate = $this->getValidationFactory()->make($request->all(), [
+            'images'=>"required",
+            'images.*' => 'image|mimes:jpeg,jpg,png|max:2048',
             'name'=>'required|string|max:257',
             'stock'=>'required|numeric|min:1',
             'price'=>'required|numeric|min:1',
@@ -24,25 +26,23 @@ class ProductController extends Controller
                 'name.required' => 'Name is must.',
                 'name.min' => 'Name must have 5 char.',
             ]);
-        $item =Product::where('author', Auth::getUser()->id)->where("name",$request->post('name'))->first();
+        $item =Product::where('author', Auth::getUser()->id)->where("name",$validate->validated()['name'])->first();
         if (isset($item)){
             echo "400";
             return;
         }
         if ($validate->fails()) {
-            echo 'error';
+            echo $validate->errors();
             return ;
         }
         $product_created=Product::create([
-            "name"=>$request->post('name'),
+            "name"=>$validate->validated()['name'],
             "author"=>Auth::getUser()->id,
-            "stock"=>$request->post('stock'),
-            "price"=>$request->post('price'),
-            "description"=>$request->post('description'),
+            "stock"=>$validate->validated()['stock'],
+            "price"=>$validate->validated()['price'],
+            "description"=>$validate->validated()['description'],
         ]);
-        $i=0;
-        foreach ($request->file('images') as $imagefile) {
-            echo $i++;     
+        foreach ($validate->validated()['images'] as $imagefile) {   
             $image = new product_images;
             $filename = time().$imagefile->getClientOriginalName();
              Storage::disk('local')->putFileAs(

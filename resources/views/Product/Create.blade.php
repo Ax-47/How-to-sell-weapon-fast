@@ -11,7 +11,7 @@
     <h1>create</h1>
     <form action={{url("/product")}} method="post" enctype="multipart/form-data">
         @csrf
-        <input type="file" id="file"  name="images[]"  multiple="multiple"><br>
+        <input type="file" id="file"  name="images[]"  multiple="multiple" accept=".jpg, .jpeg, .png"><br>
         
         <input type="text" name="name">
         <input type="text" name="description">
